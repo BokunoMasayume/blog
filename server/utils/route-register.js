@@ -1,5 +1,7 @@
 const methods = require('methods');
-
+const fs = require('fs');
+const path = require('path');
+const config = require('../config');
 class Route{
     /**
      * 
@@ -18,10 +20,26 @@ class Route{
     }
 }
 
+function generateReadFile(url){
+    let p = url;
+    if(!path.isAbsolute(url)){
+        // p = path.join(__dirname , "../../static/output", url);
+        p = path.join(config.route.base, url);
+    }
+    return function(ctx ){
+        ctx.response.type = path.extname(p);
+        ctx.response.status = (ctx.response.body=fs.createReadStream(p))?200:404;
+    }
+}
+
 function registe(method, fn){
     if(arguments.length===1){
         //method use default 'get'
         return new Route('get' , fn);
+    }
+    if(fn instanceof String || typeof fn == 'string'){
+        // if a path
+        return new Route(method , generateReadFile(fn));
     }
     return new Route(method, fn);
 }

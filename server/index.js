@@ -5,7 +5,7 @@ const bodyparser = require('koa-bodyparser');
 const config= require('./config');
 // const formparse = require('koa-formdataparse');
 const fs = require('fs');
-const router = require('./server/routers');
+const router = require('./routers');
 
 
 

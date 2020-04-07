@@ -1,5 +1,7 @@
 const controllers = require('../controllers');
 const register = require('../utils/route-register');
 module.exports = {
-    '/' :register('get' , controllers.home)
+    '/' :register('get' , "testroute/test.html"),
+    '/home':register('get' , "index.html")
+    
 }

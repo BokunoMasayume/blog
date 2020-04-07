@@ -1,12 +1,14 @@
 const Koa = require('koa');
-const route = require('koa-route');
+// const route = require('koa-route');
 const bodyparser = require('koa-bodyparser');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const config= require('./config');
-const formparse = require('koa-formdataparse');
+// const formparse = require('koa-formdataparse');
+const fs = require('fs');
+const router = require('./server/routers');
 
 
-const fs = require('fs');//for test
+
 //get request body 'bodyparser' -> 'co-body' -> 'raw-body'(listen event like ondata onabort e.g.)
 
 const app = new Koa();
@@ -23,43 +25,29 @@ app.use(bodyparser({
     // encoding:null
 }));
 
+app.use(router.routes()).use(router.allowedMethods);
 
 
-// app.use(async function(ctx, next){
-//     console.log('>>>one');
-//     await next();
-//     console.log("<<<one");
+
+
+app.listen(8979);
+
+// mongoose.connect(`mongodb://${config.database.mongo.username}:${config.database.mongo.password}@${config.database.mongo.host}:${config.database.mongo.port}/${config.database.mongo.database}`,{
+//     useNewUrlParser:true,
+//     useUnifiedTopology:true
 // });
-// app.use(parseFormData());
-// app.use(formparse({
-//     limit: '20mb'
-// }));
-app.use(route.post('/',function(ctx){
-    ctx.body = ctx.request.formData;
-    // console.log(ctx.request.formData);
-    console.log("ctx.request.charset");
-    // console.log(ctx.request.body)
-    // fs.open('./'+ctx.request.formData.img.filename , 'w', function(err,fd){
-    //     if(err){
-    //         console.log(err);
-    //         return;
-    //     }
-        fs.writeFileSync('./test.png', Buffer.from(ctx.request.formData.img.data , "binary") )
-    // })
-}));
-app.use(route.get('/',function(ctx){
-    ctx.body = "fff"
-    fs.createReadStream('./test.html');
-}))
-app.use(route.get('/test.png' , function(ctx){
-    ctx.body = fs.createReadStream('./test.png')
-}))
 
-
-
-// app.listen(8979);
-
-mongoose.connect(`mongodb://${config.database.mongo.username}:${config.database.mongo.password}@${config.database.mongo.host}:${config.database.mongo.port}/${config.database.mongo.database}`)
-.then()
+// const testModel = require('./server/models/test');
+// new testModel({
+//     name:"kanda",
+//     age:33,
+//     comments:['first1','second1','thir1d','forth1']
+// }).save(function(err,obj){
+//     if(err){
+//         console.log('fail to save:',err);
+//         return;
+//     }
+//     console.log('saved successful:',...arguments);
+// })
 
 console.log("listening 8979");

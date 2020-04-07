@@ -26,26 +26,83 @@ mongoose
 - _id :ObjectId
 - labels: [string] # normal labels
 - serial: [string] # serial labels
-- type: String # post / log 
-- createdate: Date
-- updateDate: Date
+- type: String # post / log /essay
+- avatar :String #url
+- title : String   # unique index
 - content : String
+- isdelete: boolean
+- likes :Number
+- dislikes:Number
 
 ## comments
 - _id :ObjectId
 - owner: githun account username
-- date: Date
+- belongedPost: ObjectId
 - content: String
 - root: ObjectId
 - parent : ObjectId
+- isdelete: Boolean
+- likes: Number
+- dislikes:Number
 
 ## labels
 - _id: ObjectID
-- name :String
+- name :String # unique index
 - type :String # normal / serial 
 - reference: Number
-- date : Date
+- isdelete: Boolean
+- likes: Number
+- dislikes:Number
 
+## demos
+- _id: ObjectId
+- title: String # unique index
+- url : String
+- describe: String
+- avatar :String
+- githubLink:String
+- likes: Number
+- dislikes:Number
+
+<!-- ## todos
+- _id:ObjectId
+- title:String # unique index
+- describe :String
+- status: String # pending / resolve /reject -->
+
+# URLs
+- `get` / :首页
+- `get` /posts/:page : 博文目录 分页
+- `get` /logs/:page : 日志目录 分页
+- `get` /essays/:page :文章目录分页
+- `get` /labels : 标签目录
+- `get` /post/:id :博文页面
+- `get` /essay/:id
+- `get` /log/:id
+- `get` /label/:labelName/:page : 该标签下所有内容目录 分页 
+
+# APIs
+- `get` /api/posts/:page
+- `get` /api/logs/:page
+- `get` /api/essays/:page
+- `get` /api/labels
+- `get` /api/post/:id
+- `get` /api/log/:id
+- `get` /api/essay/:id
+- `get` /api/comments/:postId/:page
+- `get` /api/category/:labelName/:page
+- `post` /api/comments/:postId
+
+<!-- - `post` /api/post
+- `post` /api/log
+- `post` /api/essay
+- `post` /api/label
+- `post` /api/serial
+
+- `patch` /api/post/:id
+- `patch` /api/log/:id
+- `patch` /api/essay/:id  -->
+ 
 # log
 mongoose 全局require得到的是同一个实例
 ```js

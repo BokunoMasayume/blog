@@ -5,9 +5,11 @@ module.exports = {
         mongo:{
             host: 'localhost',
             port: '27017',
-            password: "masayume",
-            username: "mongo",
+            password: "allen",
+            username: "blogadmin",
             database: "koa-blog-test"
         }
-    }
+    },
+
+    admin:'BokunoMasayume'
 }
